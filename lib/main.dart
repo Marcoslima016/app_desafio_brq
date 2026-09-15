@@ -1,23 +1,33 @@
+import 'package:app_desafio_brq/lib.exports.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
-void main() {
-  runApp(const AppWidget());
+void main() async {
+  runApp(
+    ModularApp(
+      module: AppModule(),
+      child: const AppWidget(),
+    ),
+  );
 }
 
-class AppWidget extends StatelessWidget {
-  const AppWidget({super.key});
+class APP {
+  APP._privateConstructor();
+  static final APP _instance = APP._privateConstructor();
+  factory APP() => _instance;
+  static APP get I => _instance;
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Portal da Seguradora',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
-      ),
-      home: const Scaffold(
-        body: Center(child: Text('Portal da Seguradora')),
-      ),
-    );
+  late final INavigationHandlerPresenter navigationHandler;
+
+  late final IServiceLocatorAdapter serviceLocator;
+
+  late final BuildContext Function() globalContext;
+
+  Future boot({BuildContext Function()? globalContextGetterFunction}) async {
+    globalContextGetterFunction ??= () => Modular.routerDelegate.navigatorKey.currentContext!;
+    globalContext = globalContextGetterFunction;
+    serviceLocator = ModularServiceLocator();
+    navigationHandler = serviceLocator.get<INavigationHandlerPresenter>();
+    AppBloc.I.add(const InitializeAppEvent());
   }
 }
