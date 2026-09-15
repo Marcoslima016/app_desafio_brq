@@ -5,6 +5,7 @@ class CoreModule extends Module {
   @override
   void exportedBinds(i) {
     i.addLazySingleton<ISecureStorageAdapter>(() => FlutterSecureStorageAdapter());
+    i.addLazySingleton<ILocalStorageAdapter>(() => SharedPreferencesStorage());
     i.addLazySingleton<INavigationHandlerPresenter>(NavigationHandler.new);
     i.addLazySingleton<IAppNavigatorAdapter>(ModularNavigator.new);
     super.exportedBinds(i);

@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await APP.I.themeController.initialize();
+
   runApp(
     ModularApp(
       module: AppModule(),
@@ -17,10 +21,9 @@ class APP {
   factory APP() => _instance;
   static APP get I => _instance;
 
+  late final ThemeController themeController;
   late final INavigationHandlerPresenter navigationHandler;
-
   late final IServiceLocatorAdapter serviceLocator;
-
   late final BuildContext Function() globalContext;
 
   Future boot({BuildContext Function()? globalContextGetterFunction}) async {
@@ -28,6 +31,11 @@ class APP {
     globalContext = globalContextGetterFunction;
     serviceLocator = ModularServiceLocator();
     navigationHandler = serviceLocator.get<INavigationHandlerPresenter>();
+    themeController = ThemeController(
+      tokens: DesignSystemTokens(),
+      storage: Modular.get<ILocalStorageAdapter>(),
+    );
+
     AppBloc.I.add(const InitializeAppEvent());
   }
 }
