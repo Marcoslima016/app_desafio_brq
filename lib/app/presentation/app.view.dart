@@ -25,15 +25,32 @@ class _AppWidgetState extends State<AppWidget> with WidgetsBindingObserver {
       designSize: const Size(375, 667),
       minTextAdapt: true,
       splitScreenMode: true,
+      enableScaleWH: () => false,
+      enableScaleText: () => true,
       builder: (context, child) {
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           routerConfig: Modular.routerConfig,
+          theme: ThemeData(
+            useMaterial3: false,
+            colorScheme: ColorScheme(
+              brightness: Brightness.dark,
+              primary: context.theme.colors.primary,
+              onPrimary: context.theme.colors.onPrimary,
+              secondary: context.theme.colors.secondary,
+              onSecondary: context.theme.colors.onSecondary,
+              error: Colors.red,
+              onError: Colors.white,
+              surface: context.theme.colors.surface,
+              onSurface: context.theme.colors.onSurface,
+            ),
+          ),
           builder: (context, child) {
             final MediaQueryData data = MediaQuery.of(context);
             return MediaQuery(
               // ignore: deprecated_member_use
               data: data.copyWith(textScaleFactor: 1.0),
+
               child: Stack(children: [child!]),
             );
           },

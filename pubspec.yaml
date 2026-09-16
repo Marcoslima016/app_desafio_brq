@@ -19,6 +19,7 @@ dependencies:
   flutter_secure_storage: ^10.3.1
   shared_preferences: ^2.5.5
   provider: ^6.1.2
+  contentsize_tabbarview: ^0.0.2
 
 
 dev_dependencies:

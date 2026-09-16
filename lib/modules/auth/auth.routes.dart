@@ -3,6 +3,6 @@
 class AuthRoutes {
   const AuthRoutes._();
 
-  static const String login = '/auth/login';
-  static const String signup = '/auth/signup';
+  static const String login = '/auth/login/';
+  static const String signup = '/auth/signup/';
 }

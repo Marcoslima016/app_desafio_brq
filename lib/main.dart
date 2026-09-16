@@ -5,8 +5,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await APP.I.themeController.initialize();
-
   runApp(
     ModularApp(
       module: AppModule(),
@@ -35,7 +33,7 @@ class APP {
       tokens: DesignSystemTokens(),
       storage: Modular.get<ILocalStorageAdapter>(),
     );
-
+    await APP.I.themeController.initialize();
     AppBloc.I.add(const InitializeAppEvent());
   }
 }
